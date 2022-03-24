@@ -2,6 +2,9 @@
 
 Web application that holds news in relational database and serves them via web site
 
+The project is publicly available here:
+
+http://34.122.111.115/
 
 ### Architecture
 
