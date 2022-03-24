@@ -1,6 +1,6 @@
 [submodule "news-portal"]
 	path = news-portal
-	url = https://github.com/Luckykarter/news-portal.git
+	url = git@github.com:Luckykarter/news-portal.git
 [submodule "news-ui"]
 	path = news-ui
-	url = https://github.com/Luckykarter/news-ui.git
+	url = git@github.com:Luckykarter/news-ui.git
