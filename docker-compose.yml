@@ -28,7 +28,7 @@ services:
   news-ui:
     image: news-ui:latest
     build:
-      context: ./vue-news-ui
+      context: ./news-ui
     networks:
       - backend
     volumes:
