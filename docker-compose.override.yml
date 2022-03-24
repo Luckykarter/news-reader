@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  news-portal:
+    environment:
+      - DEBUG=TRUE
+    ports:
+      - "8000:8000"
+
+  nginx:
+    ports:
+      - "81:80"

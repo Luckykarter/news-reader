@@ -1,0 +1,72 @@
+version: "3.7"
+
+services:
+  news-portal:
+    image: news-portal:latest
+    environment:
+      - DEBUG=FALSE
+      - TAG
+      - ENVIRONMENT
+      - DB_HOST=postgres
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+    build:
+      context: ./news-portal
+    command: gunicorn -b :8000 --workers=3 --log-file=- --log-level=debug portal.wsgi:application
+    volumes:
+      - static:/app/assets
+      - media:/app/media
+    depends_on:
+      - postgres
+    restart: always
+    expose:
+      - 8000
+    networks:
+      - backend
+
+  news-ui:
+    image: news-ui:latest
+    build:
+      context: ./vue-news-ui
+    networks:
+      - backend
+    volumes:
+      - ui:/dist
+
+  postgres:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - backend
+    restart: always
+
+  nginx:
+    build: ./.nginx
+    ports:
+      - "80:80"
+    networks:
+      - backend
+    depends_on:
+      - news-ui
+      - news-portal
+    volumes:
+      - ui:/etc/nginx/html/
+      - static:/app/assets
+      - media:/app/media
+    restart: always
+
+
+volumes:
+  postgres_data:
+  ui:
+  static:
+  media:
+
+networks:
+  backend:
