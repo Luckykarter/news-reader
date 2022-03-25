@@ -61,6 +61,21 @@ services:
       - media:/app/media
     restart: always
 
+  crontab:
+    build: ./.crontab
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+      - NEWS_TOPICS=${NEWS_TOPICS}
+    command: /entrypoint.sh
+    networks:
+      - backend
+    depends_on:
+      - postgres
+      - news-portal
+    restart: always
 
 volumes:
   postgres_data:
