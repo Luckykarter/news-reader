@@ -2,10 +2,6 @@
 
 Web application that holds news in relational database (the implementation uses PostgreSQL) and serves them via website
 
-The project is publicly available here:
-
-http://34.122.111.115/
-
 ### Architecture
 
 Application consists of two parts which are decoupled and connected via API:
